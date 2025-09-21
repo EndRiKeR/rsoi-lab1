@@ -1,0 +1,189 @@
+﻿using DataBaseAPI;
+using Errors;
+using Microsoft.EntityFrameworkCore;
+using Test.DataModels;
+
+namespace DataBaseContext.Repositories;
+
+public class PersonRepository : IRepository<Person>
+{
+    private readonly Context _context;
+
+    public PersonRepository(Context context)
+    {
+        _context = context;
+    }
+    
+    public async Task<List<Person>> GetListAsync()
+    {
+        try
+        {
+            List<Person> persons = await _context.Persons.ToListAsync();
+
+            if (persons == null)
+                throw new DatabaseException_ListIsNull(nameof(Person));
+
+            return persons;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    public async Task<Person> GetAsync(long id)
+    {
+        try
+        {
+            List<Person> persons = await _context.Persons.ToListAsync();
+
+            if (persons == null)
+                throw new DatabaseException_ListIsNull(nameof(Person));
+            
+            Person? target = persons.Find(p => p.Id == id);
+            
+            if (target == null)
+                throw new DatabaseException_EntityDoesNotExist(id.ToString());
+
+            return target;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    public async Task CreateAsync(Person item)
+    {
+        try
+        {
+            if (item == null)
+                throw new DatabaseException_ArgumentIsNull(nameof(CreateAsync), nameof(item));
+
+            List<Person> persons = await _context.Persons.ToListAsync();
+
+            if (persons == null)
+                throw new DatabaseException_ListIsNull(nameof(Person));
+            
+            bool exists = persons.Any(p => p.Id == item.Id && p.Surname == item.Surname);
+
+            if (exists)
+                throw new DatabaseException_EntityAlreadyExists(item.ToString());
+
+            await _context.Persons.AddAsync(item);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+    
+    public async Task<long> CreateEmptyAsync()
+    {
+        try
+        {
+            List<Person> persons = await _context.Persons.ToListAsync();
+
+            if (persons == null)
+                throw new DatabaseException_ListIsNull(nameof(Person));
+
+            Person empty = new Person() {Name = "", Surname = ""};
+            var person = await _context.Persons.AddAsync(empty);
+            await _context.SaveChangesAsync();
+            
+            return person.Entity.Id;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    public async Task AddListAsync(List<Person> items)
+    {
+        try
+        {
+            if (items == null)
+                throw new DatabaseException_ArgumentIsNull(nameof(AddListAsync), nameof(items));
+
+            List<Person> persons = await _context.Persons.ToListAsync();
+
+            if (persons == null)
+                throw new DatabaseException_ListIsNull(nameof(Person));
+
+            foreach (Person item in items)
+            {
+                bool exists = persons.Any(p => p.Id == item.Id && p.Surname == item.Surname);
+            
+                if (!exists)
+                    await _context.Persons.AddAsync(item);
+            }
+           
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    public async Task UpdateAsync(Person item)
+    {
+        try
+        {
+            if (item == null)
+                throw new DatabaseException_ArgumentIsNull(nameof(UpdateAsync), nameof(item));
+            
+            List<Person> persons = await _context.Persons.ToListAsync();
+
+            if (persons == null)
+                throw new DatabaseException_ListIsNull(nameof(Person));
+            
+            Person? target = persons.Find(p => p.Id == item.Id);
+            
+            if (target == null)
+                throw new DatabaseException_EntityDoesNotExist(item.ToString());
+            
+            target.Surname = item.Surname;
+            target.Name = item.Name;
+            target.Id = item.Id;
+           
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+
+    public async Task DeleteAsync(long itemId)
+    {
+        try
+        {
+            List<Person> persons = await _context.Persons.ToListAsync();
+
+            if (persons == null)
+                throw new DatabaseException_ListIsNull(nameof(Person));
+            
+            Person? target = persons.Find(p => p.Id == itemId);
+            
+            if (target == null)
+                throw new DatabaseException_EntityDoesNotExist(itemId.ToString());
+            
+            _context.Remove(target);
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+}
