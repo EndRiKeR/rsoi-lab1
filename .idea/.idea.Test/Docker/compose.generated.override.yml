@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  server:
+    build:
+      context: "D:\\myProgects\\repLab\\rsoi-lab1"
+      dockerfile: "Dockerfile"
+      target: "build"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Test.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net8.0/Test.staticwebassets.runtime.CT.json"
+    image: "test:dev"
+    ports: []
+    volumes:
+    - "D:\\myProgects\\repLab\\rsoi-lab1:/app:rw"
+    - "D:\\myProgects\\repLab\\rsoi-lab1:/src:rw"
+    - "C:\\Users\\solom\\.nuget\\packages:/root/.nuget/packages"
+    working_dir: "/app"
