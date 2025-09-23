@@ -47,9 +47,9 @@
 							"raw": "{\n    \"name\": \"{{$randomUserName}}\",\n    \"address\": \"{{$randomStreetAddress}}\",\n    \"work\": \"{{$randomCompanyName}}\",\n    \"age\": 31\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/persons",
+							"raw": "http://server:8080/api/v1/persons",
 							"host": [
-								"localhost:8080"
+								"server:8080"
 							],
 							"path": [
 								"api",
