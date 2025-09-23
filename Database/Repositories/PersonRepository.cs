@@ -55,47 +55,27 @@ public class PersonRepository : IRepository<Person>
         }
     }
 
-    public async Task CreateAsync(Person item)
+    public async Task<long> CreateAsync(string name)
     {
         try
         {
-            if (item == null)
-                throw new DatabaseException_ArgumentIsNull(nameof(CreateAsync), nameof(item));
+            if (name == null)
+                throw new DatabaseException_ArgumentIsNull(nameof(CreateAsync), nameof(name));
 
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
                 throw new DatabaseException_ListIsNull(nameof(Person));
             
-            bool exists = persons.Any(p => p.Id == item.Id && p.Surname == item.Surname);
+            bool exists = persons.Any(p => p.Name == name);
 
             if (exists)
-                throw new DatabaseException_EntityAlreadyExists(item.ToString());
+                throw new DatabaseException_EntityAlreadyExists(name);
 
-            await _context.Persons.AddAsync(item);
-            await _context.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            throw;
-        }
-    }
-    
-    public async Task<long> CreateEmptyAsync()
-    {
-        try
-        {
-            List<Person> persons = await _context.Persons.ToListAsync();
-
-            if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
-
-            Person empty = new Person() {Name = "", Surname = ""};
-            var person = await _context.Persons.AddAsync(empty);
+            var createdPerson = await _context.Persons.AddAsync(new Person { Name = name, Age = 0, Address = "", Work = ""});
             await _context.SaveChangesAsync();
             
-            return person.Entity.Id;
+            return createdPerson.Entity.Id;
         }
         catch (Exception ex)
         {
@@ -118,7 +98,7 @@ public class PersonRepository : IRepository<Person>
 
             foreach (Person item in items)
             {
-                bool exists = persons.Any(p => p.Id == item.Id && p.Surname == item.Surname);
+                bool exists = persons.Any(p => p.Id == item.Id && p.Name == item.Name);
             
                 if (!exists)
                     await _context.Persons.AddAsync(item);
@@ -150,7 +130,6 @@ public class PersonRepository : IRepository<Person>
             if (target == null)
                 throw new DatabaseException_EntityDoesNotExist(item.ToString());
             
-            target.Surname = item.Surname;
             target.Name = item.Name;
             target.Id = item.Id;
            

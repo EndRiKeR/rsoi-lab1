@@ -1,4 +1,5 @@
 ﻿using DataBaseAPI;
+using Errors;
 using Microsoft.AspNetCore.Mvc;
 using Test.DataModels;
 using Test.Models;
@@ -7,7 +8,7 @@ namespace Test.Controllers;
 
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/v1/[controller]")]
 public class PersonsController : ControllerBase
 {
     private readonly IRepository<Person> _personRepo;
@@ -33,7 +34,7 @@ public class PersonsController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetPersons()
+    public async Task<IActionResult> GetAllPersons()
     {
         try
         {
@@ -42,12 +43,35 @@ public class PersonsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest();
+            return BadRequest(ex.Message);
+        }
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> CreateNewPerson()
+    {
+        try
+        {
+            if (!Request.Headers.TryGetValue("Name", out var name))
+                throw new BackendException_RequiredArgumet(nameof(name));
+            
+            var personId = await _personRepo.CreateAsync(name);
+            
+            string routeTemplate = ControllerContext.ActionDescriptor.AttributeRouteInfo?.Template;
+            string routeFull = routeTemplate + "/" + personId;
+            
+            var result = Created();
+            result.Location = routeFull;
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
         }
     }
     
     [HttpGet("{personId}")]
-    public async Task<IActionResult> GetPerson(long personId)
+    public async Task<IActionResult> GetPersonById(long personId)
     {
         try
         {
@@ -60,31 +84,10 @@ public class PersonsController : ControllerBase
         }
     }
     
-    [HttpPatch("{personId}")]
-    public async Task<IActionResult> UpdatePerson(long personId)
-    {
-        try
-        {
-            var oldPerson = await _personRepo.GetAsync(personId);
-            
-            if (Request.Headers.TryGetValue("Name", out var name) && !string.IsNullOrEmpty(name))
-                oldPerson.Name = name;
-            
-            if (Request.Headers.TryGetValue("Surname", out var surname) && !string.IsNullOrEmpty(name))
-                oldPerson.Surname = surname;
-            
-            await _personRepo.UpdateAsync(oldPerson);
-            
-            return Ok(oldPerson);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest();
-        }
-    }
+
     
     [HttpDelete("{personId}")]
-    public async Task<IActionResult> DeletePerson(long personId)
+    public async Task<IActionResult> RemovePersonById(long personId)
     {
         try
         {
@@ -97,19 +100,61 @@ public class PersonsController : ControllerBase
         }
     }
     
-    [HttpPost]
-    public async Task<IActionResult> CreatePerson()
+    [HttpPatch("{personId}")]
+    public async Task<IActionResult> UpdatePersonById(long personId)
     {
         try
         {
-            var personId = await _personRepo.CreateEmptyAsync();
-            var result = Created();
-            result.Location = $"/api/v1/persons/{personId}";
-            return result;
+            var oldPerson = await _personRepo.GetAsync(personId);
+            
+            // Name
+            if (!Request.Headers.TryGetValue("Name", out var name))
+                throw new BackendException_RequiredArgumet(nameof(name));
+
+            if (string.IsNullOrEmpty(name) || name.Count > 20)
+                throw new BackendException_IncorrectArgumet(nameof(name));
+
+            oldPerson.Name = name;
+            
+            // Age
+            if (!Request.Headers.TryGetValue("Age", out var age) && string.IsNullOrEmpty(age))
+                throw new BackendException_IncorrectArgumet(nameof(name));
+            
+            int intAge = Convert.ToInt32(age);
+            
+            if (intAge is < 0 or > 150)
+                throw new BackendException_IncorrectArgumet(nameof(age));
+            
+            oldPerson.Age = intAge;
+        
+            // Address
+            
+            if (!Request.Headers.TryGetValue("Address", out var address) &&
+                (string.IsNullOrEmpty(address) || address.Count > 200))
+                throw new BackendException_IncorrectArgumet(nameof(address));
+            
+            oldPerson.Address = address;
+            
+            // Work
+            
+            if (!Request.Headers.TryGetValue("Work", out var work) &&
+                (string.IsNullOrEmpty(work) || work.Count > 50))
+                throw new BackendException_IncorrectArgumet(nameof(work));
+            
+            oldPerson.Work = work;
+            
+            await _personRepo.UpdateAsync(oldPerson);
+            return Ok(oldPerson);
         }
         catch (Exception ex)
         {
-            return BadRequest();
+            if (ex is BackendException_IncorrectArgumet or BackendException_RequiredArgumet)
+                return BadRequest(ex.Message);
+
+            if (ex is DatabaseException_EntityDoesNotExist)
+                return NotFound(ex.Message);
+                
+            return BadRequest(ex.Message);
         }
     }
 
@@ -117,9 +162,13 @@ public class PersonsController : ControllerBase
     {
         return new()
         {
-            new Person() { Id = 1, Name = "Петя", Surname = "Соломенков"},
-            new Person() { Id = 2, Name = "Коля", Surname = "Сколков"},
-            new Person() { Id = 3, Name = "Маша", Surname = "Василькова"},
+            new Person() { Name = "Петя", Age = 14, Work = "Dev-OPS", Address = "Russia"},
+            new Person() { Name = "Коля", Age = 25, Work = "Chef", Address = "Russia"},
+            new Person() { Name = "Маша", Age = 40, Work = "Barista", Address = "Russia"},
+            new Person() { Name = "Варя", Age = 38, Work = "Barber", Address = "Russia"},
+            new Person() { Name = "Оля", Age = 12, Work = "Model", Address = "Russia"},
+            new Person() { Name = "Саша", Age = 19, Work = "Student", Address = "Russia"},
+            new Person() { Name = "Сережа", Age = 77, Work = "Doctor", Address = "Russia"},
         };
     }
 }
