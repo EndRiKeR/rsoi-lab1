@@ -9,7 +9,6 @@ public sealed class Context : DbContext
 
     public Context(DbContextOptions<Context> dbContextOptions) : base(dbContextOptions)
     {
-        // Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 

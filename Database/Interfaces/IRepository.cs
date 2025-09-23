@@ -26,16 +26,7 @@ public interface IRepository<T> where T : IDatabaseModel
     /// <exception> DataBaseMindException_EntityIsNull </exception>
     /// <exception> DataBaseMindException_EntityAlreadyExists </exception>
     /// <returns>Task</returns>
-    public Task CreateAsync(T item);
-    
-    /// <summary>
-    /// создание объекта
-    /// </summary>
-    /// <param name="item"></param>
-    /// <exception> DataBaseMindException_EntityIsNull </exception>
-    /// <exception> DataBaseMindException_EntityAlreadyExists </exception>
-    /// <returns>Task</returns>
-    public Task<long> CreateEmptyAsync();
+    public Task<long> CreateAsync(string name);
     
     /// <summary>
     /// создание листа объектов
