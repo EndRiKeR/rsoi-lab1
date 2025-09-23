@@ -12,25 +12,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b8499ba5-1053-4905-8c3c-35a1b4289a5d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Test/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Test/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Test/Docker/compose.generated.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Test/Docker/compose.generated.override.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/HomeController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/PersonsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/PersonsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database/Context.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Context.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database/Interfaces/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Interfaces/IRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database/Models/Person.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Models/Person.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Database/Repositories/PersonRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Repositories/PersonRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Errors/BaseException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Errors/BaseException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/Test.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Home/Index.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Home/Privacy.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Shared/Error.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Shared/_Layout.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Shared/_Layout.cshtml.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/Shared/_ValidationScriptsPartial.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/_ViewImports.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Views/_ViewStart.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/postman/[inst] Lab1.postman_collection.json" beforeDir="false" afterPath="$PROJECT_DIR$/postman/[inst] Lab1.postman_collection.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +161,7 @@
       <workItem from="1758453583000" duration="3000" />
       <workItem from="1758453955787" duration="10580000" />
       <workItem from="1758470828343" duration="301000" />
-      <workItem from="1758633092779" duration="7712000" />
+      <workItem from="1758633092779" duration="8350000" />
     </task>
     <servers />
   </component>
