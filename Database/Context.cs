@@ -9,7 +9,17 @@ public sealed class Context : DbContext
 
     public Context(DbContextOptions<Context> dbContextOptions) : base(dbContextOptions)
     {
-        Database.EnsureCreated();
+        try
+        {
+            // Проверяем подключение без создания БД
+            Database.CanConnect();
+            Database.EnsureCreated();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Database connection failed: {ex.Message}");
+            throw;
+        }
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
