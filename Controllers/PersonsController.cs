@@ -29,7 +29,7 @@ public class PersonsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest();
+            return BadRequest(ex.Message);
         }
     }
     
@@ -80,7 +80,7 @@ public class PersonsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return NotFound();
+            return NotFound(ex.Message);
         }
     }
     
@@ -96,7 +96,7 @@ public class PersonsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest();
+            return BadRequest(ex.Message);
         }
     }
     
