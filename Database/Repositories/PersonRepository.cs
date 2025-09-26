@@ -55,24 +55,24 @@ public class PersonRepository : IRepository<Person>
         }
     }
 
-    public async Task<long> CreateAsync(string name)
+    public async Task<long> CreateAsync(Person person)
     {
         try
         {
-            if (name == null)
-                throw new DatabaseException_ArgumentIsNull(nameof(CreateAsync), nameof(name));
+            if (person == null)
+                throw new DatabaseException_ArgumentIsNull(nameof(CreateAsync), nameof(person));
 
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
                 throw new DatabaseException_ListIsNull(nameof(Person));
             
-            bool exists = persons.Any(p => p.Name == name);
+            bool exists = persons.Any(p => p.Name == person.Name);
 
             if (exists)
-                throw new DatabaseException_EntityAlreadyExists(name);
+                throw new DatabaseException_EntityAlreadyExists(person.Name);
 
-            var createdPerson = await _context.Persons.AddAsync(new Person { Name = name, Age = 0, Address = "", Work = ""});
+            var createdPerson = await _context.Persons.AddAsync(person);
             await _context.SaveChangesAsync();
             
             return createdPerson.Entity.Id;

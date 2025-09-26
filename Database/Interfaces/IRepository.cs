@@ -1,4 +1,5 @@
-﻿using Test.Models;
+﻿using Test.DataModels;
+using Test.Models;
 
 namespace DataBaseAPI;
 
@@ -26,7 +27,7 @@ public interface IRepository<T> where T : IDatabaseModel
     /// <exception> DataBaseMindException_EntityIsNull </exception>
     /// <exception> DataBaseMindException_EntityAlreadyExists </exception>
     /// <returns>Task</returns>
-    public Task<long> CreateAsync(string name);
+    public Task<long> CreateAsync(Person person);
     
     /// <summary>
     /// создание листа объектов

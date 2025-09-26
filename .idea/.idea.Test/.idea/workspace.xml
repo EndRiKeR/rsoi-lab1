@@ -13,6 +13,8 @@
     <list default="true" id="b8499ba5-1053-4905-8c3c-35a1b4289a5d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Test/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Test/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/PersonsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/PersonsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/Interfaces/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Interfaces/IRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/Repositories/PersonRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Repositories/PersonRepository.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -55,7 +55,34 @@ public class PersonsController : ControllerBase
             if (!Request.Headers.TryGetValue("name", out var name))
                 throw new BackendException_RequiredArgumet(nameof(name));
             
-            var personId = await _personRepo.CreateAsync(name);
+            if (string.IsNullOrEmpty(name) || name.Count > 20)
+                throw new BackendException_IncorrectArgumet(nameof(name));
+            
+            if (!Request.Headers.TryGetValue("age", out var age) && string.IsNullOrEmpty(age))
+                throw new BackendException_IncorrectArgumet(nameof(age));
+
+            int intAge = Convert.ToInt32(age);
+
+            if (intAge is < 0 or > 150)
+                intAge = -1;
+            
+            if (!Request.Headers.TryGetValue("address", out var address) &&
+                (string.IsNullOrEmpty(address) || address.Count > 200))
+                address = string.Empty;
+            
+            if (!Request.Headers.TryGetValue("work", out var work) &&
+                (string.IsNullOrEmpty(work) || work.Count > 50))
+                work = string.Empty;
+
+            Person person = new Person()
+            {
+                Name = name,
+                Age = intAge,
+                Address = address,
+                Work = work,
+            };
+            
+            var personId = await _personRepo.CreateAsync(person);
             
             string routeTemplate = ControllerContext.ActionDescriptor.AttributeRouteInfo?.Template;
             string routeFull = routeTemplate + "/" + personId;
@@ -117,34 +144,29 @@ public class PersonsController : ControllerBase
             oldPerson.Name = name;
             
             // Age
-            if (Request.Headers.TryGetValue("age", out var age))
+            if (Request.Headers.TryGetValue("age", out var age) && !string.IsNullOrEmpty(age))
             {
-                if (string.IsNullOrEmpty(age))
-                    throw new BackendException_IncorrectArgumet(nameof(age));
-            
                 int intAge = Convert.ToInt32(age);
             
-                if (intAge is < 0 or > 150)
-                    throw new BackendException_IncorrectArgumet(nameof(age));
-            
-                oldPerson.Age = intAge;
+                if (intAge is >= 0 or <= 150)
+                    oldPerson.Age = intAge;
             }
             
             // Address
-            
-            if (!Request.Headers.TryGetValue("address", out var address) &&
-                (string.IsNullOrEmpty(address) || address.Count > 200))
-                throw new BackendException_IncorrectArgumet(nameof(address));
-            
-            oldPerson.Address = address;
+
+            if (Request.Headers.TryGetValue("address", out var address) &&
+                !(string.IsNullOrEmpty(address) || address.Count > 200))
+            {
+                oldPerson.Address = address;
+            }
             
             // Work
-            
-            if (!Request.Headers.TryGetValue("work", out var work) &&
-                (string.IsNullOrEmpty(work) || work.Count > 50))
-                throw new BackendException_IncorrectArgumet(nameof(work));
-            
-            oldPerson.Work = work;
+
+            if (Request.Headers.TryGetValue("work", out var work) &&
+                !(string.IsNullOrEmpty(work) || work.Count > 50))
+            {
+                oldPerson.Work = work;
+            }
             
             await _personRepo.UpdateAsync(oldPerson);
             return Ok(oldPerson);
