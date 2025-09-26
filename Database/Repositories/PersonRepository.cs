@@ -66,11 +66,6 @@ public class PersonRepository : IRepository<Person>
 
             if (persons == null)
                 throw new DatabaseException_ListIsNull(nameof(Person));
-            
-            bool exists = persons.Any(p => p.Name == person.Name);
-
-            if (exists)
-                throw new DatabaseException_EntityAlreadyExists(person.Name);
 
             var createdPerson = await _context.Persons.AddAsync(person);
             await _context.SaveChangesAsync();
