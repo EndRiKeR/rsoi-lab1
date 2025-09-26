@@ -55,7 +55,7 @@ public class PersonRepository : IRepository<Person>
         }
     }
 
-    public async Task<long> CreateAsync(Person person)
+    public async Task<Person> CreateAsync(Person person)
     {
         try
         {
@@ -70,7 +70,7 @@ public class PersonRepository : IRepository<Person>
             var createdPerson = await _context.Persons.AddAsync(person);
             await _context.SaveChangesAsync();
             
-            return createdPerson.Entity.Id;
+            return createdPerson.Entity;
         }
         catch (Exception ex)
         {

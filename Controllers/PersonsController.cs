@@ -84,14 +84,12 @@ public class PersonsController : ControllerBase
                 Work = work,
             };
             
-            var personId = await _personRepo.CreateAsync(person);
+            var createdPerson = await _personRepo.CreateAsync(person);
             
             string routeTemplate = ControllerContext.ActionDescriptor.AttributeRouteInfo?.Template;
-            string routeFull = routeTemplate + "/" + personId;
+            string routeFull = routeTemplate + "/" + createdPerson.Id;
             
-            var result = Created();
-            result.Location = routeFull;
-            return result;
+            return Created(routeFull, createdPerson);
         }
         catch (Exception ex)
         {
