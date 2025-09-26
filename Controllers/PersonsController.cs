@@ -52,7 +52,7 @@ public class PersonsController : ControllerBase
     {
         try
         {
-            if (!Request.Headers.TryGetValue("Name", out var name))
+            if (!Request.Headers.TryGetValue("name", out var name))
                 throw new BackendException_RequiredArgumet(nameof(name));
             
             var personId = await _personRepo.CreateAsync(name);
@@ -108,7 +108,7 @@ public class PersonsController : ControllerBase
             var oldPerson = await _personRepo.GetAsync(personId);
             
             // Name
-            if (!Request.Headers.TryGetValue("Name", out var name))
+            if (!Request.Headers.TryGetValue("name", out var name))
                 throw new BackendException_RequiredArgumet(nameof(name));
 
             if (string.IsNullOrEmpty(name) || name.Count > 20)
@@ -117,7 +117,7 @@ public class PersonsController : ControllerBase
             oldPerson.Name = name;
             
             // Age
-            if (Request.Headers.TryGetValue("Age", out var age))
+            if (Request.Headers.TryGetValue("age", out var age))
             {
                 if (string.IsNullOrEmpty(age))
                     throw new BackendException_IncorrectArgumet(nameof(age));
@@ -132,7 +132,7 @@ public class PersonsController : ControllerBase
             
             // Address
             
-            if (!Request.Headers.TryGetValue("Address", out var address) &&
+            if (!Request.Headers.TryGetValue("address", out var address) &&
                 (string.IsNullOrEmpty(address) || address.Count > 200))
                 throw new BackendException_IncorrectArgumet(nameof(address));
             
@@ -140,7 +140,7 @@ public class PersonsController : ControllerBase
             
             // Work
             
-            if (!Request.Headers.TryGetValue("Work", out var work) &&
+            if (!Request.Headers.TryGetValue("work", out var work) &&
                 (string.IsNullOrEmpty(work) || work.Count > 50))
                 throw new BackendException_IncorrectArgumet(nameof(work));
             
