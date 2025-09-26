@@ -4,22 +4,22 @@ services:
     build:
       context: .
       target: final
-    depends_on:
-      - postgres
+#    depends_on:
+#      - postgres
     ports:
       - "8080:8080"
         
-  postgres:
-    image: library/postgres
-    container_name: postgres
-    restart: on-failure
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: postgres
-    volumes:
-      - db-data:/var/lib/postgresql/data
-      - ./postgres/:/docker-entrypoint-initdb.d/
-  
-volumes:
-  db-data:
+#  postgres:
+#    image: library/postgres
+#    container_name: postgres
+#    restart: on-failure
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: "postgres"
+#      POSTGRES_DB: postgres
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
+#      - ./postgres/:/docker-entrypoint-initdb.d/
+#  
+#volumes:
+#  db-data:
