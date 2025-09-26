@@ -11,21 +11,17 @@ builder.Services.AddControllers();
 
 builder.Services.AddTransient<IRepository<Person>, PersonRepository>();
 
-builder.Services.AddDbContext<Context>(options =>
-    {
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-        options.EnableSensitiveDataLogging();
-    },
-    ServiceLifetime.Scoped,
-    ServiceLifetime.Scoped);
+var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+var dbPort = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
+var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+var dbUser = Environment.GetEnvironmentVariable("DB_USER");
+var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+
+var connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPassword};";
+
+builder.Services.AddDbContext<Context>(options => { options.UseNpgsql(connectionString); });
 
 var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
