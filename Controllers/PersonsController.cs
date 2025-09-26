@@ -52,19 +52,21 @@ public class PersonsController : ControllerBase
     {
         try
         {
+            int intAge = -1;
+            
             if (!Request.Headers.TryGetValue("name", out var name))
                 throw new BackendException_RequiredArgumet(nameof(name));
             
             if (string.IsNullOrEmpty(name) || name.Count > 20)
                 throw new BackendException_IncorrectArgumet(nameof(name));
-            
-            if (!Request.Headers.TryGetValue("age", out var age) && string.IsNullOrEmpty(age))
-                throw new BackendException_IncorrectArgumet(nameof(age));
 
-            int intAge = Convert.ToInt32(age);
-
-            if (intAge is < 0 or > 150)
-                intAge = -1;
+            if (Request.Headers.TryGetValue("age", out var age) && !string.IsNullOrEmpty(age))
+            {
+                intAge = Convert.ToInt32(age);
+                
+                if (intAge is < 0 or > 150)
+                    intAge = -1;
+            }
             
             if (!Request.Headers.TryGetValue("address", out var address) &&
                 (string.IsNullOrEmpty(address) || address.Count > 200))
