@@ -117,16 +117,19 @@ public class PersonsController : ControllerBase
             oldPerson.Name = name;
             
             // Age
-            if (!Request.Headers.TryGetValue("Age", out var age) && string.IsNullOrEmpty(age))
-                throw new BackendException_IncorrectArgumet(nameof(name));
+            if (Request.Headers.TryGetValue("Age", out var age))
+            {
+                if (string.IsNullOrEmpty(age))
+                    throw new BackendException_IncorrectArgumet(nameof(age));
             
-            int intAge = Convert.ToInt32(age);
+                int intAge = Convert.ToInt32(age);
             
-            if (intAge is < 0 or > 150)
-                throw new BackendException_IncorrectArgumet(nameof(age));
+                if (intAge is < 0 or > 150)
+                    throw new BackendException_IncorrectArgumet(nameof(age));
             
-            oldPerson.Age = intAge;
-        
+                oldPerson.Age = intAge;
+            }
+            
             // Address
             
             if (!Request.Headers.TryGetValue("Address", out var address) &&
