@@ -11,8 +11,6 @@ public sealed class Context : DbContext
     {
         try
         {
-            // Проверяем подключение без создания БД
-            Database.CanConnect();
             Database.EnsureCreated();
         }
         catch (Exception ex)

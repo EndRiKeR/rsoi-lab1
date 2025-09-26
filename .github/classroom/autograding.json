@@ -1,7 +1,17 @@
 {
   "tests": [
     {
-      "name": "Run Postman",
+      "name": "Run Local Postman",
+      "setup": "",
+      "run": "newman run -e postman/[inst][local]\\ Lab1.postman_environment.json postman/[inst]\\ Lab1.postman_collection.json",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 10
+    },
+    {
+      "name": "Run Railway Postman",
       "setup": "",
       "run": "newman run -e postman/[inst][heroku]\\ Lab1.postman_environment.json postman/[inst]\\ Lab1.postman_collection.json",
       "input": "",

@@ -112,7 +112,7 @@ public class PersonsController : ControllerBase
                 throw new BackendException_RequiredArgumet(nameof(name));
 
             if (string.IsNullOrEmpty(name) || name.Count > 20)
-                throw new BackendException_IncorrectArgumet(nameof(name));
+                throw new BackendException_IncorrectArgumet(nameof(name) + $"string.IsNullOrEmpty(name)");
 
             oldPerson.Name = name;
             
