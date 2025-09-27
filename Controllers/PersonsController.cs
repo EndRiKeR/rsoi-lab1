@@ -15,10 +15,12 @@ namespace Test.Controllers;
 public class PersonsController : ControllerBase
 {
     private readonly IRepository<Person> _personRepo;
+    private readonly ILogger _logger;
     
-    public PersonsController(IRepository<Person> personRepo)
+    public PersonsController(IRepository<Person> personRepo, ILoggerFactory logger)
     {
         _personRepo = personRepo;
+        _logger = logger.CreateLogger("PersonsController");
     }
     
     [HttpGet("fillDB")]
@@ -64,12 +66,12 @@ public class PersonsController : ControllerBase
             req.Seek(0, SeekOrigin.Begin);
             string json = new StreamReader(req).ReadToEnd();
             
-            Console.WriteLine(JsonSerializer.Serialize(json));
+            _logger.Log(LogLevel.Information, JsonSerializer.Serialize(json));
             
             Person input = null;
             input = JsonSerializer.Deserialize<Person>(json);
             
-            Console.WriteLine(JsonSerializer.Serialize(input));
+            _logger.Log(LogLevel.Information, JsonSerializer.Serialize(input));
             
             if (string.IsNullOrEmpty(input.Name) || input.Name.Length > 20)
                 throw new BackendException_IncorrectArgumet(nameof(input.Name));
