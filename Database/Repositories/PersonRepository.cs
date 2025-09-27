@@ -108,7 +108,7 @@ public class PersonRepository : IRepository<Person>
         }
     }
 
-    public async Task UpdateAsync(Person item)
+    public async Task<Person> UpdateAsync(Person item)
     {
         try
         {
@@ -131,6 +131,7 @@ public class PersonRepository : IRepository<Person>
             target.Work = item.Work;
            
             await _context.SaveChangesAsync();
+            return target;
         }
         catch (Exception ex)
         {

@@ -92,7 +92,7 @@ public class PersonsController : ControllerBase
         try
         {
             await _personRepo.DeleteAsync(personId);
-            return Ok();
+            return Created();
         }
         catch (Exception ex)
         {
@@ -111,8 +111,8 @@ public class PersonsController : ControllerBase
             oldPerson.Address = (string.IsNullOrEmpty(personDto.Address) || personDto.Address.Length > 200) ? "" : personDto.Address;
             oldPerson.Work = (string.IsNullOrEmpty(personDto.Work) || personDto.Work.Length > 50) ? "" : personDto.Work;
             
-            await _personRepo.UpdateAsync(oldPerson);
-            return Ok(oldPerson);
+            Person savedPerson = await _personRepo.UpdateAsync(oldPerson);
+            return Ok(savedPerson);
         }
         catch (Exception ex)
         {

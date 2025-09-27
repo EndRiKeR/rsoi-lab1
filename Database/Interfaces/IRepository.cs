@@ -45,7 +45,7 @@ public interface IRepository<T> where T : IDatabaseModel
     /// <exception> DataBaseMindException_EntityIsNull </exception>
     /// <exception> DataBaseMindException_EntityDoesNotExist </exception>
     /// <returns>Task</returns>
-    public Task UpdateAsync(T item);
+    public Task<Person> UpdateAsync(T item);
     
     /// <summary>
     /// удаление объекта по ID
