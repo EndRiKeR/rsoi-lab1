@@ -57,6 +57,8 @@ public class PersonsController : ControllerBase
     {
         try
         {
+            return Created("api/v1/persons/100", new Person() { Name = "1", Address = "1", Age = 1, Work = "1", Id = 100});
+            
             int intAge = -1;
             string address = string.Empty;
             string work = string.Empty;
