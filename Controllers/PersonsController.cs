@@ -116,9 +116,6 @@ public class PersonsController : ControllerBase
         }
         catch (Exception ex)
         {
-            if (ex is BackendException_IncorrectArgumet or BackendException_RequiredArgumet)
-                return BadRequest(ex.Message);
-
             if (ex is DatabaseException_EntityDoesNotExist)
                 return NotFound(ex.Message);
                 

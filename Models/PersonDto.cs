@@ -4,10 +4,10 @@ namespace Test.Models;
 
 public class PersonDto
 {
-    public required string Name { get; set; }
-    public required int Age { get; set; }
-    public required string Address { get; set; }
-    public required string Work { get; set; }
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public string Address { get; set; }
+    public string Work { get; set; }
 
     public Person ToPerson()
     {
