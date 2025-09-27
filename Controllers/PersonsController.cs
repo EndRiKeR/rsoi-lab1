@@ -106,6 +106,7 @@ public class PersonsController : ControllerBase
         try
         {
             PersonDto personDto = new PersonDto();
+            personDto.Age = -1;
             
             if (json.TryGetProperty("name", out var nameElement))
                 personDto.Name = nameElement.GetString();
