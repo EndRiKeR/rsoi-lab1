@@ -108,20 +108,20 @@ public class PersonsController : ControllerBase
             PersonDto personDto = new PersonDto();
             
             if (json.TryGetProperty("name", out var nameElement))
-                personDto.Name = nameElement.GetString() ?? "";
+                personDto.Name = nameElement.GetString();
 
             if (json.TryGetProperty("age", out var ageElement))
                 personDto.Age = ageElement.GetInt32();
             
             if (json.TryGetProperty("address", out var addressElement))
-                personDto.Address = addressElement.GetString() ?? "";
+                personDto.Address = addressElement.GetString();
             
             if (json.TryGetProperty("work", out var workElement))
-                personDto.Work = workElement.GetString() ?? "";
+                personDto.Work = workElement.GetString();
             
             
             var oldPerson = await _personRepo.GetAsync(personId);
-            oldPerson.Name = personDto.Name;
+            oldPerson.Name = !string.IsNullOrEmpty(personDto.Name) && personDto.Name.Length <= 50 ? personDto.Name : oldPerson.Name;
             oldPerson.Age = personDto.Age is >= 0 or <= 150 ? personDto.Age.Value : oldPerson.Age;
             oldPerson.Address = !string.IsNullOrEmpty(personDto.Address) && personDto.Address.Length <= 200 ? personDto.Address : oldPerson.Address;
             oldPerson.Work = !string.IsNullOrEmpty(personDto.Work) && personDto.Work.Length <= 50 ? personDto.Work : oldPerson.Work;
