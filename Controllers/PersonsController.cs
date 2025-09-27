@@ -53,47 +53,33 @@ public class PersonsController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateNewPerson()
+    public async Task<IActionResult> CreateNewPerson([FromBody] Person person)
     {
         try
         {
-            return Created("api/v1/persons/100", new Person() { Name = "1", Address = "1", Age = 1, Work = "1", Id = 100});
-            
             int intAge = -1;
             string address = string.Empty;
             string work = string.Empty;
             string name = string.Empty;
             
-            Stream req = Request.Body;
-            req.Seek(0, SeekOrigin.Begin);
-            string json = new StreamReader(req).ReadToEnd();
-            
-            _logger.Log(LogLevel.Information, json);
-            System.Diagnostics.Debug.WriteLine(json);
-            
-            Person input = null;
-            input = JsonSerializer.Deserialize<Person>(json);
-            
-            _logger.Log(LogLevel.Information, json);
-            
-            if (string.IsNullOrEmpty(input.Name) || input.Name.Length > 20)
-                throw new BackendException_IncorrectArgumet(nameof(input.Name));
+            if (string.IsNullOrEmpty(person.Name) || person.Name.Length > 20)
+                throw new BackendException_IncorrectArgumet(nameof(person.Name));
             else
-                name = input.Name;
+                name = person.Name;
             
-            if (input == null)
-                throw new BackendException_IncorrectArgumet(nameof(input));
+            if (person == null)
+                throw new BackendException_IncorrectArgumet(nameof(person));
 
-            if (input.Age is >= 0 or <= 150)
-                intAge = input.Age;
+            if (person.Age is >= 0 or <= 150)
+                intAge = person.Age;
             
-            if (!string.IsNullOrEmpty(input.Address) && input.Address.Length <= 200)
-                address = input.Address;
+            if (!string.IsNullOrEmpty(person.Address) && person.Address.Length <= 200)
+                address = person.Address;
             
-            if (!string.IsNullOrEmpty(work) && input.Work.Length <= 50)
-                work = input.Work;
+            if (!string.IsNullOrEmpty(work) && person.Work.Length <= 50)
+                work = person.Work;
 
-            Person person = new Person()
+            Person newPerson = new Person()
             {
                 Name = name,
                 Age = intAge,
@@ -101,7 +87,7 @@ public class PersonsController : ControllerBase
                 Work = work,
             };
             
-            var createdPerson = await _personRepo.CreateAsync(person);
+            var createdPerson = await _personRepo.CreateAsync(newPerson);
             
             string routeTemplate = ControllerContext.ActionDescriptor.AttributeRouteInfo?.Template;
             string routeFull = routeTemplate + "/" + createdPerson.Id;
