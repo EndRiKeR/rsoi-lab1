@@ -106,19 +106,9 @@ public class PersonsController : ControllerBase
         try
         {
             var oldPerson = await _personRepo.GetAsync(personId);
-            
-            if (string.IsNullOrEmpty(personDto.Name) || personDto.Name.Length > 20)
-                throw new BackendException_IncorrectArgumet(nameof(personDto.Name) + $"{string.IsNullOrEmpty(personDto.Name)}");
-
             oldPerson.Name = personDto.Name;
-            
-            // Age
             oldPerson.Age = personDto.Age is >= 0 or <= 150 ? personDto.Age : -1;
-            
-            // Address
             oldPerson.Address = (string.IsNullOrEmpty(personDto.Address) || personDto.Address.Length > 200) ? "" : personDto.Address;
-            
-            // Work
             oldPerson.Work = (string.IsNullOrEmpty(personDto.Work) || personDto.Work.Length > 50) ? "" : personDto.Work;
             
             await _personRepo.UpdateAsync(oldPerson);
