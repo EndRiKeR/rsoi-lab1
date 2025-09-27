@@ -66,13 +66,13 @@ public class PersonsController : ControllerBase
             req.Seek(0, SeekOrigin.Begin);
             string json = new StreamReader(req).ReadToEnd();
             
-            _logger.Log(LogLevel.Information, JsonSerializer.Serialize(json));
-            System.Diagnostics.Debug.WriteLine(JsonSerializer.Serialize(json));
+            _logger.Log(LogLevel.Information, json);
+            System.Diagnostics.Debug.WriteLine(json);
             
             Person input = null;
             input = JsonSerializer.Deserialize<Person>(json);
             
-            _logger.Log(LogLevel.Information, JsonSerializer.Serialize(input));
+            _logger.Log(LogLevel.Information, json);
             
             if (string.IsNullOrEmpty(input.Name) || input.Name.Length > 20)
                 throw new BackendException_IncorrectArgumet(nameof(input.Name));
