@@ -122,7 +122,7 @@ public class PersonsController : ControllerBase
             
             var oldPerson = await _personRepo.GetAsync(personId);
             oldPerson.Name = !string.IsNullOrEmpty(personDto.Name) && personDto.Name.Length <= 50 ? personDto.Name : oldPerson.Name;
-            oldPerson.Age = personDto.Age is >= 0 or <= 150 ? personDto.Age.Value : oldPerson.Age;
+            oldPerson.Age = personDto.Age is >= 0 and <= 150 ? personDto.Age : oldPerson.Age;
             oldPerson.Address = !string.IsNullOrEmpty(personDto.Address) && personDto.Address.Length <= 200 ? personDto.Address : oldPerson.Address;
             oldPerson.Work = !string.IsNullOrEmpty(personDto.Work) && personDto.Work.Length <= 50 ? personDto.Work : oldPerson.Work;
             
