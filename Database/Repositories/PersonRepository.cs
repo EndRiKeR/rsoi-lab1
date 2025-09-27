@@ -125,7 +125,6 @@ public class PersonRepository : IRepository<Person>
             if (target == null)
                 throw new DatabaseException_EntityDoesNotExist(item.ToString());
             
-            target.Id = item.Id;
             target.Name = item.Name;
             target.Address = item.Address;
             target.Work = item.Work;

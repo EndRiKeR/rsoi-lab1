@@ -107,9 +107,9 @@ public class PersonsController : ControllerBase
         {
             var oldPerson = await _personRepo.GetAsync(personId);
             oldPerson.Name = personDto.Name;
-            oldPerson.Age = personDto.Age.HasValue && personDto.Age.Value is >= 0 or <= 150 ? personDto.Age.Value : -1;
-            oldPerson.Address = (string.IsNullOrEmpty(personDto.Address) || personDto.Address.Length > 200) ? "" : personDto.Address;
-            oldPerson.Work = (string.IsNullOrEmpty(personDto.Work) || personDto.Work.Length > 50) ? "" : personDto.Work;
+            oldPerson.Age = personDto.Age is >= 0 or <= 150 ? personDto.Age.Value : -1;
+            oldPerson.Address = !string.IsNullOrEmpty(personDto.Address) && personDto.Address.Length <= 200 ? personDto.Address : "";
+            oldPerson.Work = !string.IsNullOrEmpty(personDto.Work) && personDto.Work.Length <= 50 ? personDto.Work : "";
             
             Person savedPerson = await _personRepo.UpdateAsync(oldPerson);
             return Ok(savedPerson);
