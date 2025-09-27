@@ -63,8 +63,13 @@ public class PersonsController : ControllerBase
             Stream req = Request.Body;
             req.Seek(0, SeekOrigin.Begin);
             string json = new StreamReader(req).ReadToEnd();
+            
+            Console.WriteLine(JsonSerializer.Serialize(json));
+            
             Person input = null;
             input = JsonSerializer.Deserialize<Person>(json);
+            
+            Console.WriteLine(JsonSerializer.Serialize(input));
             
             if (string.IsNullOrEmpty(input.Name) || input.Name.Length > 20)
                 throw new BackendException_IncorrectArgumet(nameof(input.Name));
@@ -85,7 +90,7 @@ public class PersonsController : ControllerBase
 
             Person person = new Person()
             {
-                Name = input.Name,
+                Name = name,
                 Age = intAge,
                 Address = address,
                 Work = work,
