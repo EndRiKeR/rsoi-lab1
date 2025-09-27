@@ -57,28 +57,6 @@ public class PersonsController : ControllerBase
     {
         try
         {
-            // int intAge = -1;
-            // string address = string.Empty;
-            // string work = string.Empty;
-            // string name = string.Empty;
-            //
-            // if (string.IsNullOrEmpty(personDto.Name) || personDto.Name.Length > 20)
-            //     throw new BackendException_IncorrectArgumet(nameof(personDto.Name));
-            // else
-            //     name = personDto.Name;
-            //
-            // if (personDto == null)
-            //     throw new BackendException_IncorrectArgumet(nameof(personDto));
-            //
-            // if (personDto.Age is >= 0 or <= 150)
-            //     intAge = personDto.Age;
-            //
-            // if (!string.IsNullOrEmpty(personDto.Address) && personDto.Address.Length <= 200)
-            //     address = personDto.Address;
-            //
-            // if (!string.IsNullOrEmpty(work) && personDto.Work.Length <= 50)
-            //     work = personDto.Work;
-
             Person newPerson = personDto.ToPerson();
             
             var createdPerson = await _personRepo.CreateAsync(newPerson);
@@ -108,8 +86,6 @@ public class PersonsController : ControllerBase
         }
     }
     
-
-    
     [HttpDelete("{personId}")]
     public async Task<IActionResult> RemovePersonById(long personId)
     {
@@ -125,31 +101,25 @@ public class PersonsController : ControllerBase
     }
     
     [HttpPatch("{personId}")]
-    public async Task<IActionResult> UpdatePersonById(long personId)
+    public async Task<IActionResult> UpdatePersonById(long personId, [FromBody] PersonDto personDto)
     {
         try
         {
             var oldPerson = await _personRepo.GetAsync(personId);
             
-            Stream req = Request.Body;
-            req.Seek(0, SeekOrigin.Begin);
-            string json = new StreamReader(req).ReadToEnd();
-            Person input = null;
-            input = JsonSerializer.Deserialize<Person>(json);
-            
-            if (string.IsNullOrEmpty(input.Name) || input.Name.Length > 20)
-                throw new BackendException_IncorrectArgumet(nameof(input.Name) + $"{string.IsNullOrEmpty(input.Name)}");
+            if (string.IsNullOrEmpty(personDto.Name) || personDto.Name.Length > 20)
+                throw new BackendException_IncorrectArgumet(nameof(personDto.Name) + $"{string.IsNullOrEmpty(personDto.Name)}");
 
-            oldPerson.Name = input.Name;
+            oldPerson.Name = personDto.Name;
             
             // Age
-            oldPerson.Age = input.Age is >= 0 or <= 150 ? input.Age : -1;
+            oldPerson.Age = personDto.Age is >= 0 or <= 150 ? personDto.Age : -1;
             
             // Address
-            oldPerson.Address = (string.IsNullOrEmpty(input.Address) || input.Address.Length > 200) ? "" : input.Address;
+            oldPerson.Address = (string.IsNullOrEmpty(personDto.Address) || personDto.Address.Length > 200) ? "" : personDto.Address;
             
             // Work
-            oldPerson.Work = (string.IsNullOrEmpty(input.Work) || input.Work.Length > 50) ? "" : input.Work;
+            oldPerson.Work = (string.IsNullOrEmpty(personDto.Work) || personDto.Work.Length > 50) ? "" : personDto.Work;
             
             await _personRepo.UpdateAsync(oldPerson);
             return Ok(oldPerson);
