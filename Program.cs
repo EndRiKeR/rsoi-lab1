@@ -6,6 +6,9 @@ using Test.DataModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -14,18 +17,9 @@ builder.Services.AddTransient<IRepository<Person>, PersonRepository>();
 builder.Services.AddDbContext<Context>(options =>
     {
         options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-        options.EnableSensitiveDataLogging();
-    },
-    ServiceLifetime.Scoped,
-    ServiceLifetime.Scoped);
+    });
 
 var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

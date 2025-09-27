@@ -55,27 +55,22 @@ public class PersonRepository : IRepository<Person>
         }
     }
 
-    public async Task<long> CreateAsync(string name)
+    public async Task<Person> CreateAsync(Person person)
     {
         try
         {
-            if (name == null)
-                throw new DatabaseException_ArgumentIsNull(nameof(CreateAsync), nameof(name));
+            if (person == null)
+                throw new DatabaseException_ArgumentIsNull(nameof(CreateAsync), nameof(person));
 
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
                 throw new DatabaseException_ListIsNull(nameof(Person));
-            
-            bool exists = persons.Any(p => p.Name == name);
 
-            if (exists)
-                throw new DatabaseException_EntityAlreadyExists(name);
-
-            var createdPerson = await _context.Persons.AddAsync(new Person { Name = name, Age = 0, Address = "", Work = ""});
+            var createdPerson = await _context.Persons.AddAsync(person);
             await _context.SaveChangesAsync();
             
-            return createdPerson.Entity.Id;
+            return createdPerson.Entity;
         }
         catch (Exception ex)
         {
@@ -113,7 +108,7 @@ public class PersonRepository : IRepository<Person>
         }
     }
 
-    public async Task UpdateAsync(Person item)
+    public async Task<Person> UpdateAsync(Person item)
     {
         try
         {
@@ -131,9 +126,12 @@ public class PersonRepository : IRepository<Person>
                 throw new DatabaseException_EntityDoesNotExist(item.ToString());
             
             target.Name = item.Name;
-            target.Id = item.Id;
+            target.Age = item.Age;
+            target.Address = item.Address;
+            target.Work = item.Work;
            
             await _context.SaveChangesAsync();
+            return target;
         }
         catch (Exception ex)
         {
