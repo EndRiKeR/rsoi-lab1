@@ -67,6 +67,7 @@ public class PersonsController : ControllerBase
             string json = new StreamReader(req).ReadToEnd();
             
             _logger.Log(LogLevel.Information, JsonSerializer.Serialize(json));
+            System.Diagnostics.Debug.WriteLine(JsonSerializer.Serialize(json));
             
             Person input = null;
             input = JsonSerializer.Deserialize<Person>(json);
