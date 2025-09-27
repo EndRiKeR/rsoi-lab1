@@ -277,19 +277,19 @@
 	"variable": [
 		{
 			"key": "name",
-			"value": ""
+			"value": "Sasha"
 		},
 		{
 			"key": "address",
-			"value": ""
+			"value": "Peter"
 		},
 		{
 			"key": "work",
-			"value": ""
+			"value": "Artist"
 		},
 		{
 			"key": "age",
-			"value": ""
+			"value": "26"
 		},
 		{
 			"key": "personId",
