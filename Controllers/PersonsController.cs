@@ -58,9 +58,6 @@ public class PersonsController : ControllerBase
         try
         {
             Person newPerson = personDto.ToPerson();
-
-            if (newPerson.Age < 0 || newPerson.Age > 100)
-                return Created($"{personDto}", newPerson);
             
             var createdPerson = await _personRepo.CreateAsync(newPerson);
             
