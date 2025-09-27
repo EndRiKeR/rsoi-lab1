@@ -53,39 +53,33 @@ public class PersonsController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateNewPerson([FromBody] Person person)
+    public async Task<IActionResult> CreateNewPerson([FromBody] PersonDto personDto)
     {
         try
         {
-            int intAge = -1;
-            string address = string.Empty;
-            string work = string.Empty;
-            string name = string.Empty;
-            
-            if (string.IsNullOrEmpty(person.Name) || person.Name.Length > 20)
-                throw new BackendException_IncorrectArgumet(nameof(person.Name));
-            else
-                name = person.Name;
-            
-            if (person == null)
-                throw new BackendException_IncorrectArgumet(nameof(person));
+            // int intAge = -1;
+            // string address = string.Empty;
+            // string work = string.Empty;
+            // string name = string.Empty;
+            //
+            // if (string.IsNullOrEmpty(personDto.Name) || personDto.Name.Length > 20)
+            //     throw new BackendException_IncorrectArgumet(nameof(personDto.Name));
+            // else
+            //     name = personDto.Name;
+            //
+            // if (personDto == null)
+            //     throw new BackendException_IncorrectArgumet(nameof(personDto));
+            //
+            // if (personDto.Age is >= 0 or <= 150)
+            //     intAge = personDto.Age;
+            //
+            // if (!string.IsNullOrEmpty(personDto.Address) && personDto.Address.Length <= 200)
+            //     address = personDto.Address;
+            //
+            // if (!string.IsNullOrEmpty(work) && personDto.Work.Length <= 50)
+            //     work = personDto.Work;
 
-            if (person.Age is >= 0 or <= 150)
-                intAge = person.Age;
-            
-            if (!string.IsNullOrEmpty(person.Address) && person.Address.Length <= 200)
-                address = person.Address;
-            
-            if (!string.IsNullOrEmpty(work) && person.Work.Length <= 50)
-                work = person.Work;
-
-            Person newPerson = new Person()
-            {
-                Name = name,
-                Age = intAge,
-                Address = address,
-                Work = work,
-            };
+            Person newPerson = personDto.ToPerson();
             
             var createdPerson = await _personRepo.CreateAsync(newPerson);
             
