@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using Test.DataModels;
+using RsoiLab1.DataModels;
 
-namespace Test.Models;
+namespace RsoiLab1.Models;
 
 public static class Converter
 {

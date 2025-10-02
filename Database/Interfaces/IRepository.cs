@@ -1,4 +1,5 @@
-﻿using Test.Models;
+﻿using RsoiLab1.DataModels;
+using RsoiLab1.Models;
 
 namespace DataBaseAPI;
 
@@ -26,7 +27,7 @@ public interface IRepository<T> where T : IDatabaseModel
     /// <exception> DataBaseMindException_EntityIsNull </exception>
     /// <exception> DataBaseMindException_EntityAlreadyExists </exception>
     /// <returns>Task</returns>
-    public Task<long> CreateAsync(string name);
+    public Task<Person> CreateAsync(Person person);
     
     /// <summary>
     /// создание листа объектов
@@ -44,7 +45,7 @@ public interface IRepository<T> where T : IDatabaseModel
     /// <exception> DataBaseMindException_EntityIsNull </exception>
     /// <exception> DataBaseMindException_EntityDoesNotExist </exception>
     /// <returns>Task</returns>
-    public Task UpdateAsync(T item);
+    public Task<Person> UpdateAsync(T item);
     
     /// <summary>
     /// удаление объекта по ID

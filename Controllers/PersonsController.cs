@@ -1,10 +1,11 @@
-﻿using DataBaseAPI;
+﻿using System.Text.Json;
+using DataBaseAPI;
 using Errors;
 using Microsoft.AspNetCore.Mvc;
-using Test.DataModels;
-using Test.Models;
+using RsoiLab1.DataModels;
+using RsoiLab1.Models;
 
-namespace Test.Controllers;
+namespace RsoiLab1.Controllers;
 
 
 [ApiController]
@@ -12,10 +13,12 @@ namespace Test.Controllers;
 public class PersonsController : ControllerBase
 {
     private readonly IRepository<Person> _personRepo;
+    private readonly ILogger _logger;
     
-    public PersonsController(IRepository<Person> personRepo)
+    public PersonsController(IRepository<Person> personRepo, ILoggerFactory logger)
     {
         _personRepo = personRepo;
+        _logger = logger.CreateLogger("PersonsController");
     }
     
     [HttpGet("fillDB")]
@@ -29,7 +32,7 @@ public class PersonsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest();
+            return BadRequest(ex.Message);
         }
     }
     
@@ -48,21 +51,18 @@ public class PersonsController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateNewPerson()
+    public async Task<IActionResult> CreateNewPerson([FromBody] PersonDto personDto)
     {
         try
         {
-            if (!Request.Headers.TryGetValue("Name", out var name))
-                throw new BackendException_RequiredArgumet(nameof(name));
+            Person newPerson = personDto.ToPerson();
             
-            var personId = await _personRepo.CreateAsync(name);
+            var createdPerson = await _personRepo.CreateAsync(newPerson);
             
             string routeTemplate = ControllerContext.ActionDescriptor.AttributeRouteInfo?.Template;
-            string routeFull = routeTemplate + "/" + personId;
+            string routeFull = routeTemplate + "/" + createdPerson.Id;
             
-            var result = Created();
-            result.Location = routeFull;
-            return result;
+            return Created(routeFull, createdPerson);
         }
         catch (Exception ex)
         {
@@ -80,11 +80,9 @@ public class PersonsController : ControllerBase
         }
         catch (Exception ex)
         {
-            return NotFound();
+            return NotFound(ex.Message);
         }
     }
-    
-
     
     [HttpDelete("{personId}")]
     public async Task<IActionResult> RemovePersonById(long personId)
@@ -92,65 +90,47 @@ public class PersonsController : ControllerBase
         try
         {
             await _personRepo.DeleteAsync(personId);
-            return Ok();
+            return Created();
         }
         catch (Exception ex)
         {
-            return BadRequest();
+            return BadRequest(ex.Message);
         }
     }
     
     [HttpPatch("{personId}")]
-    public async Task<IActionResult> UpdatePersonById(long personId)
+    public async Task<IActionResult> UpdatePersonById(long personId, [FromBody] JsonElement json)
     {
         try
         {
+            PersonDto personDto = new PersonDto();
+            
+            if (json.TryGetProperty("name", out var nameElement))
+                personDto.Name = nameElement.GetString();
+
+            if (json.TryGetProperty("age", out var ageElement))
+                personDto.Age = ageElement.TryGetInt32(out var intAge) ? intAge : -1;
+            else
+                personDto.Age = -1;
+            
+            if (json.TryGetProperty("address", out var addressElement))
+                personDto.Address = addressElement.GetString();
+            
+            if (json.TryGetProperty("work", out var workElement))
+                personDto.Work = workElement.GetString();
+            
+            
             var oldPerson = await _personRepo.GetAsync(personId);
+            oldPerson.Name = !string.IsNullOrEmpty(personDto.Name) && personDto.Name.Length <= 50 ? personDto.Name : oldPerson.Name;
+            oldPerson.Age = personDto.Age is >= 0 and <= 150 ? personDto.Age : oldPerson.Age;
+            oldPerson.Address = !string.IsNullOrEmpty(personDto.Address) && personDto.Address.Length <= 200 ? personDto.Address : oldPerson.Address;
+            oldPerson.Work = !string.IsNullOrEmpty(personDto.Work) && personDto.Work.Length <= 50 ? personDto.Work : oldPerson.Work;
             
-            // Name
-            if (!Request.Headers.TryGetValue("Name", out var name))
-                throw new BackendException_RequiredArgumet(nameof(name));
-
-            if (string.IsNullOrEmpty(name) || name.Count > 20)
-                throw new BackendException_IncorrectArgumet(nameof(name));
-
-            oldPerson.Name = name;
-            
-            // Age
-            if (!Request.Headers.TryGetValue("Age", out var age) && string.IsNullOrEmpty(age))
-                throw new BackendException_IncorrectArgumet(nameof(name));
-            
-            int intAge = Convert.ToInt32(age);
-            
-            if (intAge is < 0 or > 150)
-                throw new BackendException_IncorrectArgumet(nameof(age));
-            
-            oldPerson.Age = intAge;
-        
-            // Address
-            
-            if (!Request.Headers.TryGetValue("Address", out var address) &&
-                (string.IsNullOrEmpty(address) || address.Count > 200))
-                throw new BackendException_IncorrectArgumet(nameof(address));
-            
-            oldPerson.Address = address;
-            
-            // Work
-            
-            if (!Request.Headers.TryGetValue("Work", out var work) &&
-                (string.IsNullOrEmpty(work) || work.Count > 50))
-                throw new BackendException_IncorrectArgumet(nameof(work));
-            
-            oldPerson.Work = work;
-            
-            await _personRepo.UpdateAsync(oldPerson);
-            return Ok(oldPerson);
+            Person savedPerson = await _personRepo.UpdateAsync(oldPerson);
+            return Ok(savedPerson);
         }
         catch (Exception ex)
         {
-            if (ex is BackendException_IncorrectArgumet or BackendException_RequiredArgumet)
-                return BadRequest(ex.Message);
-
             if (ex is DatabaseException_EntityDoesNotExist)
                 return NotFound(ex.Message);
                 

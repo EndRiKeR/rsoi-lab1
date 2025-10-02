@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
 using Microsoft.EntityFrameworkCore;
-using Test.Models;
+using RsoiLab1.Models;
 
-namespace Test.DataModels;
+namespace RsoiLab1.DataModels;
 
 [PrimaryKey("Id")]
 public class Person : IDatabaseModel
@@ -24,4 +23,16 @@ public class Person : IDatabaseModel
     
     public override string ToString()
         => $"Person Id: {Id}, Name: {Name}, Age {Age}, Address: {Address}, Work: {Work}";
+
+    public override bool Equals(object obj)
+    {
+        if (obj is not Person person)
+            return false;
+        
+        return Id == person.Id &&
+               Name == person.Name &&
+               Age == person.Age &&
+               Address == person.Address &&
+               Work == person.Work;
+    }
 }

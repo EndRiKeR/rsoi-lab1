@@ -1,19 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Test.DataModels;
+using RsoiLab1.DataModels;
 
 namespace DataBaseContext;
 
-public sealed class Context : DbContext
+public class Context : DbContext
 {
-    public DbSet<Person> Persons { get; set; } = null!;
+    public virtual DbSet<Person> Persons { get; set; }
 
-    public Context(DbContextOptions<Context> dbContextOptions) : base(dbContextOptions)
-    {
-        Database.EnsureCreated();
-    }
+    public Context() { }
+    public Context(DbContextOptions<Context> dbContextOptions) : base(dbContextOptions) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
+        base.OnModelCreating(modelBuilder);
     }
 }

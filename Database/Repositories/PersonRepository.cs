@@ -1,7 +1,7 @@
 ﻿using DataBaseAPI;
 using Errors;
 using Microsoft.EntityFrameworkCore;
-using Test.DataModels;
+using RsoiLab1.DataModels;
 
 namespace DataBaseContext.Repositories;
 
@@ -21,7 +21,7 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
 
             return persons;
         }
@@ -39,7 +39,7 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
             
             Person? target = persons.Find(p => p.Id == id);
             
@@ -55,27 +55,24 @@ public class PersonRepository : IRepository<Person>
         }
     }
 
-    public async Task<long> CreateAsync(string name)
+    public async Task<Person> CreateAsync(Person person)
     {
         try
         {
-            if (name == null)
-                throw new DatabaseException_ArgumentIsNull(nameof(CreateAsync), nameof(name));
+            if (person == null)
+                throw new DatabaseException_ArgumentIsNull(nameof(CreateAsync), nameof(person));
 
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
             
-            bool exists = persons.Any(p => p.Name == name);
+            person.Id = await _context.Persons.CountAsync() != 0 ? _context.Persons.Max(p => p.Id) + 1 : 1;
 
-            if (exists)
-                throw new DatabaseException_EntityAlreadyExists(name);
-
-            var createdPerson = await _context.Persons.AddAsync(new Person { Name = name, Age = 0, Address = "", Work = ""});
+            await _context.Persons.AddAsync(person);
             await _context.SaveChangesAsync();
             
-            return createdPerson.Entity.Id;
+            return person;
         }
         catch (Exception ex)
         {
@@ -94,7 +91,7 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
 
             foreach (Person item in items)
             {
@@ -113,7 +110,7 @@ public class PersonRepository : IRepository<Person>
         }
     }
 
-    public async Task UpdateAsync(Person item)
+    public async Task<Person> UpdateAsync(Person item)
     {
         try
         {
@@ -123,7 +120,7 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
             
             Person? target = persons.Find(p => p.Id == item.Id);
             
@@ -131,9 +128,12 @@ public class PersonRepository : IRepository<Person>
                 throw new DatabaseException_EntityDoesNotExist(item.ToString());
             
             target.Name = item.Name;
-            target.Id = item.Id;
+            target.Age = item.Age;
+            target.Address = item.Address;
+            target.Work = item.Work;
            
             await _context.SaveChangesAsync();
+            return target;
         }
         catch (Exception ex)
         {
@@ -149,7 +149,7 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
             
             Person? target = persons.Find(p => p.Id == itemId);
             
