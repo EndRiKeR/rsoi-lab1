@@ -11,7 +11,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8499ba5-1053-4905-8c3c-35a1b4289a5d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/UniTests/Factories/PersonFactory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UniTests/PersonRepositoryUnitTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UniTests/UniTests.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/classroom.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/classroom.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Test/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Test/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/PersonsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/PersonsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/Context.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Context.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/Interfaces/IDatabaseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Interfaces/IDatabaseModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/Interfaces/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Interfaces/IRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/Models/Person.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Models/Person.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/Repositories/PersonRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Database/Repositories/PersonRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Converter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Converter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/PersonDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/PersonDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Test.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Test.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/Test.sln.DotSettings.user" afterDir="false" />
     </list>
@@ -24,10 +37,22 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/114a0a5677ac4113980497cab0663b2dc90930/52/43e26513/List`1.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/43c07a384250af318144a0dcb061248bfe4d85ec1de7be8ea536923238d746/Lazy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4b21fc3f8a3abb5d25f06c622276fbec0fd3932f169cc6af520bf5abc6a46b4/DbSet.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/77e7699fd0ac4dc12a7b36b0f893cbab90ceb667d0ecac61fd5ceb20622/CollectionTrackerExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7b710f6a0201548f1aee385dbfe20b7cdd629fb378894c7978f7ca5936a28/ConfigurationExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7fcc41fe48c43f71d1476329de953fce8565fcc5dbf3c8c6fdb81c216b19c4/ArgumentNullException.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/82e9288cb3e4fb0e5316f85257376df465dc7bc82890c2121a640dfb03916/JsonElement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8d42d5f1712377031e2892d1c29db5c23b8c7d49b9dc632fbf463bd930a8/RuntimeHelpers.CoreCLR.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/96a4cc66aa48dda8a9d8be8febec4a769fc143f7a86dd53ecdebfb9c3177d/ControllerBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9a6b1457cbcf17db31a383ba49ef9bcc786cf3ef77146d997eee499b27a46d/Object.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ad8b2779652854276d03ec153d51377686c7193799d1688e119272770d0cf/EqualityAsserts.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c9497269c7bff966d8076fbc62438d814eae322c4c93e8ca5cacc31f9758a/Guards.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/cc7fbe201d223b613fd1ea9430c981f3e746506462ce5a7b1574b7aae99e8538/AssertEqualityComparer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d9f4d618a211bf25e6dbb6598391416e199abc8b2dc809e527f55b41a5bc/Comparers.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/UniTests/Factories/PersonFactory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/UniTests/PersonRepositoryUnitTests.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -35,7 +60,7 @@
 }</component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Toolset" />
+    <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -46,22 +71,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Docker.compose.yaml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;start-again-with-clear-project&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/myProgects/repLab/rsoi-lab1&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "660e8c60-6ddf-4cc5-b631-eeb0ca5be2fc.executor": "Debug",
+    "Docker.compose.yaml: Compose Deployment.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "start-again-with-clear-project",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/myProgects/repLab/rsoi-lab1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "RiderNuGetOptionsPageId",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Docker.compose.yaml: Compose Deployment">
     <configuration name="Test: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Test.csproj" />
@@ -165,6 +192,9 @@
       <workItem from="1758453955787" duration="10580000" />
       <workItem from="1758470828343" duration="301000" />
       <workItem from="1758633092779" duration="7712000" />
+      <workItem from="1759395512173" duration="315000" />
+      <workItem from="1759395844727" duration="5679000" />
+      <workItem from="1759403721816" duration="2878000" />
     </task>
     <servers />
   </component>
@@ -176,5 +206,37 @@
   <component name="VcsManagerConfiguration">
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UniTests/PersonRepositoryUnitTests.cs</url>
+          <line>59</line>
+          <properties documentPath="C:\Work\Repos\rsoi-lab1\UniTests\PersonRepositoryUnitTests.cs" containingFunctionPresentation="Method 'AddPersonAsync_Basic_Success'">
+            <startOffsets>
+              <option value="2117" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2202" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UniTests/PersonRepositoryUnitTests.cs</url>
+          <line>81</line>
+          <properties documentPath="C:\Work\Repos\rsoi-lab1\UniTests\PersonRepositoryUnitTests.cs" containingFunctionPresentation="Method 'GetPersonByIdAsync_Basic_Success'">
+            <startOffsets>
+              <option value="2827" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2886" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -2,7 +2,7 @@ using DataBaseAPI;
 using DataBaseContext;
 using DataBaseContext.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Test.DataModels;
+using RsoiLab1.DataModels;
 
 var builder = WebApplication.CreateBuilder(args);
 

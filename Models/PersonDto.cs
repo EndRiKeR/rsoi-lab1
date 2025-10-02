@@ -1,6 +1,6 @@
-﻿using Test.DataModels;
+﻿using RsoiLab1.DataModels;
 
-namespace Test.Models;
+namespace RsoiLab1.Models;
 
 public class PersonDto
 {

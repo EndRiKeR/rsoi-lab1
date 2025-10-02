@@ -1,7 +1,7 @@
 ﻿using DataBaseAPI;
 using Errors;
 using Microsoft.EntityFrameworkCore;
-using Test.DataModels;
+using RsoiLab1.DataModels;
 
 namespace DataBaseContext.Repositories;
 
@@ -21,7 +21,7 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
 
             return persons;
         }
@@ -39,7 +39,7 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
             
             Person? target = persons.Find(p => p.Id == id);
             
@@ -65,12 +65,14 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
+            
+            person.Id = await _context.Persons.CountAsync() != 0 ? _context.Persons.Max(p => p.Id) + 1 : 1;
 
-            var createdPerson = await _context.Persons.AddAsync(person);
+            await _context.Persons.AddAsync(person);
             await _context.SaveChangesAsync();
             
-            return createdPerson.Entity;
+            return person;
         }
         catch (Exception ex)
         {
@@ -89,7 +91,7 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
 
             foreach (Person item in items)
             {
@@ -118,7 +120,7 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
             
             Person? target = persons.Find(p => p.Id == item.Id);
             
@@ -147,7 +149,7 @@ public class PersonRepository : IRepository<Person>
             List<Person> persons = await _context.Persons.ToListAsync();
 
             if (persons == null)
-                throw new DatabaseException_ListIsNull(nameof(Person));
+                throw new DatabaseException_ListIsNull(nameof(RsoiLab1));
             
             Person? target = persons.Find(p => p.Id == itemId);
             

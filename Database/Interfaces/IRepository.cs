@@ -1,5 +1,5 @@
-﻿using Test.DataModels;
-using Test.Models;
+﻿using RsoiLab1.DataModels;
+using RsoiLab1.Models;
 
 namespace DataBaseAPI;
 

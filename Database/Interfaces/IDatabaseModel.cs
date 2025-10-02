@@ -1,4 +1,4 @@
-﻿namespace Test.Models;
+﻿namespace RsoiLab1.Models;
 
 public interface IDatabaseModel
 {

@@ -1,13 +1,11 @@
-﻿using System.Net;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json;
 using DataBaseAPI;
 using Errors;
 using Microsoft.AspNetCore.Mvc;
-using Test.DataModels;
-using Test.Models;
+using RsoiLab1.DataModels;
+using RsoiLab1.Models;
 
-namespace Test.Controllers;
+namespace RsoiLab1.Controllers;
 
 
 [ApiController]
